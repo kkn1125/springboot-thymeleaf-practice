@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <body>
+    <div th:fragment="Header">
+      <nav>
+        <button class="btn btn-primary btn-sm">
+          <a class="fw-bold text-white text-decoration-none" th:href="@{/}"
+            >Main</a
+          >
+        </button>
+        <button class="btn btn-primary btn-sm">
+          <a
+            class="fw-bold text-white text-decoration-none"
+            th:href="@{/chatting-room}"
+            >Chatting Room</a
+          >
+        </button>
+      </nav>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/defaultLayout}"
+  layout:fragment="Content">
+  <!--공통 JS / CSS 영역을 관리하는 환경 영역-->
+  <head>
+    <title th:text="${title}"></title>
+  </head>
+
+  <body>
+    <h1 th:text="${title}"></h1>
+    Notfound
+  </body>
+</html>

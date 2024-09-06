@@ -1,6 +1,8 @@
 package com.chatting.app.chatting.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -15,7 +17,13 @@ public class RouteConfig implements WebMvcConfigurer {
       "classpath:/META-INF/resources/", "classpath:/resources/",
       "classpath:/static/", "classpath:/public/" };
 
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
   @Override
+
   public void configurePathMatch(PathMatchConfigurer configurer) {
     configurer.addPathPrefix("/api", HandlerTypePredicate.forAnnotation(RestController.class));
   }

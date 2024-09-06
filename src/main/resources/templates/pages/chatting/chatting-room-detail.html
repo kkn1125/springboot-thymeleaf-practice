@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/defaultLayout}"
+  layout:fragment="Content">
+  <!--공통 JS / CSS 영역을 관리하는 환경 영역-->
+  <head>
+    <title th:text="${title}"></title>
+  </head>
+
+  <body>
+    <h1 th:text="${title}"></h1>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div>Title: [[${chattingRoom.title}]]</div>
+        <div>Desc: [[${chattingRoom.description}]]</div>
+        <div>Author: [[${chattingRoom.user.username}]]</div>
+        <div>CreatedAt: [[${chattingRoom.createdAt}]]</div>
+      </li>
+    </ul>
+    <div>my id: [[${socketId}]]</div>
+    <div id="messageWindow"></div>
+    <form id="sendTextForm" onsubmit="sendMessage(event)">
+      <input type="text" id="message" />
+      <button type="submit"></button>
+    </form>
+
+    <script type="text/javascript">
+      let id = "";
+      /** @type {WebSocket} */
+      let ws;
+      const messageList = [];
+      const sendTextForm = document.querySelector("#sendTextForm");
+      const messageWindow = document.querySelector("#messageWindow");
+
+      window.addEventListener("load", () => {
+        ws = new WebSocket("ws://localhost:8080/chat");
+        ws.binaryType = "arraybuffer";
+        ws.onopen = (e) => {
+          console.log("connected", e);
+        };
+        ws.onmessage = ({ data }) => {
+          console.log("receive:", data);
+          const json = JSON.parse(data);
+          switch (json.action) {
+            case "connect":
+              id = json.user;
+              break;
+            case "send":
+              console.log(json);
+              messageList.push(json);
+              updateMessageWindow();
+              break;
+            default:
+              //
+              break;
+          }
+        };
+        ws.onclose = (e) => {
+          console.log(e);
+          ws.send(
+            JSON.stringify({
+              action: "out",
+              user: "[[${socketId}]]",
+            })
+          );
+        };
+      });
+      window.addEventListener("beforeunload", () => {
+        ws.close();
+      });
+      function sendMessage(/** @type{SubmitEvent} */ e) {
+        e.preventDefault();
+        const message = sendTextForm.message.value;
+        ws.send(
+          JSON.stringify({
+            action: "send",
+            user: "[[${socketId}]]",
+            message,
+          })
+        );
+        sendTextForm.message.value = "";
+        return false;
+      }
+      function updateMessageWindow() {
+        messageWindow.innerHTML = messageList
+          .map((item) => `<li>${item.user}:${item.message}</li>`)
+          .join("");
+      }
+    </script>
+  </body>
+</html>

@@ -26,14 +26,17 @@ spring:
     check-template-location: true
     thymeleaf-layout-dialect:
       enabled: true
+    check-template: true
 
 logging:
   level:
     root: info
-# mybatis:
-#   mapper-locations:
-#     - classpath:mapper/**/*.xml
-#     - classpath:mapper/*.xml
-#   configuration:
-#     map-underscore-to-camel-case: true
-#   type-aliases-package: com.app.board.dev.board_app.board.dto
+mybatis:
+  # mapper-locations:
+  #   - classpath:mapper/**/*.xml
+  #   - classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+    jdbc-type-for-null: NULL
+  # type-aliases-package: com.app.board.dev.board_app.board.dto

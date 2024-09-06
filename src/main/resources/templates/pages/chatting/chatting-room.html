@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/defaultLayout}"
+  layout:fragment="Content">
+  <!--공통 JS / CSS 영역을 관리하는 환경 영역-->
+  <head>
+    <title th:text="${title}"></title>
+  </head>
+
+  <body>
+    <h1 th:text="${title}"></h1>
+    <ul class="list-group">
+      <th:block th:each="item : ${chattingRoomList}">
+        <li class="list-group-item">
+          <a th:href="|/chatting-room/${item.id}|">
+            <div>Title: [[${item.title}]]</div>
+            <div>Desc: [[${item.description}]]</div>
+            <div>Author: [[${item.user.username}]]</div>
+            <div>CreatedAt: [[${item.createdAt}]]</div>
+          </a>
+        </li>
+      </th:block>
+    </ul>
+    <div th:text="|${chattingRoomList.size()}개|"></div>
+  </body>
+</html>
