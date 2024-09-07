@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class RouteConfig implements WebMvcConfigurer {
   private static final String[] RESOURCE_LOCATIONS = {
       "classpath:/META-INF/resources/", "classpath:/resources/",
-      "classpath:/static/", "classpath:/public/" };
+      "classpath:/static/", "classpath:/public/", "classpath:/templates/" };
 
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -23,7 +23,6 @@ public class RouteConfig implements WebMvcConfigurer {
   }
 
   @Override
-
   public void configurePathMatch(PathMatchConfigurer configurer) {
     configurer.addPathPrefix("/api", HandlerTypePredicate.forAnnotation(RestController.class));
   }

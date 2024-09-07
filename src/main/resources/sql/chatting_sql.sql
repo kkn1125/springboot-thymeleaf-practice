@@ -1,3 +1,5 @@
+drop schema if exists chatting_app;
+
 create schema chatting_app;
 
 use chatting_app;
@@ -5,7 +7,7 @@ use chatting_app;
 #alter table `user` add column created_at datetime not null default now() after memo;
 #alter table `user` add column updated_at datetime not null default now() on update now() after created_at;
 #desc user;
-select * from user;
+
 CREATE TABLE `user` (
     id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
@@ -15,7 +17,7 @@ CREATE TABLE `user` (
     address2 VARCHAR(500) NULL,
     zip_number INT NULL,
     memo VARCHAR(100),
-	created_at DATETIME NOT NULL DEFAULT NOW(),
+    created_at DATETIME NOT NULL DEFAULT NOW(),
     updated_at DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
 )  DEFAULT CHARSET=UTF8;
@@ -71,10 +73,10 @@ SELECT
 FROM
     board;
 
-DELETE FROM `user`;
-DELETE FROM board;
+#DELETE FROM `user`;
+#DELETE FROM board;
 
-alter table `user` auto_increment=1;
-alter table board auto_increment=1;
-alter table board modify title varchar(50) not null;
+#alter table `user` auto_increment=1;
+#alter table board auto_increment=1;
+#alter table board modify title varchar(50) not null;
 
