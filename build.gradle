@@ -23,6 +23,14 @@ repositories {
 	mavenCentral()
 }
 
+tasks {
+
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
+
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.security:spring-security-core:6.3.3'
@@ -38,6 +46,21 @@ dependencies {
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+}
+
+sourceSets {
+	main {
+		resources {
+			srcDirs("src/main/resources", "$projectDir/src/main/resources/")
+		}
+	}
+}
+
+bootRun {
+	String activeProfile = System.properties['spring.profiles.active']
+	println "zone: $activeProfile"
+	// systemProperty "spring.profiles.active", activeProfile
+	args = ["--spring.profiles.active=${project.properties['profile'] ?: 'dev'}"]
 }
 
 tasks.named('test') {
